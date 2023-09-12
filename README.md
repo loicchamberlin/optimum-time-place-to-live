@@ -19,3 +19,8 @@ Output :
 2. Optimisation problem : need to find the lowest time for both routes 
     - first based of car routes
     - then adding public transport
+
+For the second process, you can either : 
+- Choisir un périmètre fixe, trouver les premiers endroits les plus rapides [**méthode à trouver**] pour aller à l'addresse n, puis vérifier si ces endroits s'intersectent à condition d'être à une certaine distance l'un de l'autre. Si oui, garder la position moyenne entre les deux endroits. Sinon, recommencer en augmentant la périmètre de recherche.
+ --> méthode surement inutile sur Paris/IDF car le temps de route en ville peut être raccourcis même en dehors de la même zone
+- 
