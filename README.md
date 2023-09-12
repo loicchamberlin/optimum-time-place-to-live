@@ -6,11 +6,12 @@ Input :
 - **Location A** : address
 - **Location B** : address
 - **Means of Transport** : int or list of element you can choose from (after)
+
 Output :
 1. in a first place : 
-- **Optimum Location** : address
+    - **Optimum Location** : address
 2. then :
-- **Optimum Area** : coordinates (center of the area)
+    - **Optimum Area** : coordinates (center of the area)
 
 ## Process
 1. Need to convert work place positions into latitude and longitude coordinates
