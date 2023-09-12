@@ -15,6 +15,7 @@ Output :
 
 ## Process
 1. Need to convert work place positions into latitude and longitude coordinates
+    - For Later : add a mean to verify if the address used exists
 2. Optimisation problem : need to find the lowest time for both routes 
     - first based of car routes
     - then adding public transport
