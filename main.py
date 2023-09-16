@@ -8,7 +8,7 @@ def get_coordinates(address):
     my_json = r.content.decode('utf-8')
     data = json.loads(my_json)
 
-    return float(data[0]['lat']), float(data[0]['lon'])
+    return round(float(data[0]['lat']),2), round(float(data[0]['lon']),2)
 
 if __name__ == '__main__':
     address1 = '52 Av. de Bordeaux, 40200 Mimizan France'
