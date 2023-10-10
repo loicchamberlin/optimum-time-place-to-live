@@ -29,15 +29,15 @@ For the second process, you can either :
 ## feature roadmap : 
 
 1. functions : 
-- add a function that calculate the distance between two points for the distance graph creation
-- graphic functions to help the data analysis use : in progress
-- maybe reorganize the class and organize the repo
-- function to get the top 10 fastest routes : done
+    - add a function that calculate the distance between two points for the distance graph creation
+    - graphic functions to help the data analysis use : in progress
+    - maybe reorganize the class and organize the repo
+    - function to get the top 10 fastest routes : done
 
 2. logic : 
-- avoid using every nodes, just select one for some next to each other == it will optimise the road calculation, select nodes based of a close radius
-- find a way to find the fastest route, but one that is equivalent for both time (50/50) : done
+    - avoid using every nodes, just select one for some next to each other == it will optimise the road calculation, select nodes based of a close radius
+    - find a way to find the fastest route, but one that is equivalent for both time (50/50) : done
 
 3. data analysis : 
-- automate the data analysis in order to know what it is happening in the data (time dependency, histogram, min times, ...)
-- data visualisation with library folium
+    - automate the data analysis in order to know what it is happening in the data (time dependency, histogram, min times, ...)
+    - data visualisation with library folium
