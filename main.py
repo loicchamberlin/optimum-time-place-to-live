@@ -65,7 +65,7 @@ def get_path(graph, input_node, input_address, method='travel_time'):
         path_distance = np.nan
     return path, path_distance
 
-def logic(workplace1, workplace2, distance):
+def get_all_path_and_times(workplace1, workplace2, distance):
     # get the geolocalisation of the two workplace
     geoloc_wpl1, geoloc_wpl2 = get_coordinates(workplace1.address), get_coordinates(workplace2.address)
 
@@ -104,6 +104,15 @@ def logic(workplace1, workplace2, distance):
     df = pd.DataFrame(lst)
     return df
 
+def top_10_fastest_routes(input_routes):
+    input_routes['sum_times'] = input_routes['time_to_wpl1'] + input_routes['time_to_wpl2']
+    input_routes['diff_times'] = abs(input_routes['time_to_wpl1'] - input_routes['time_to_wpl2'])
+    input_routes['tot_times'] = input_routes['sum_times'] + input_routes['diff_times']
+
+    # Find the index of the row with the lowest sum
+    output_routes = input_routes.loc[input_routes['tot_times'].nsmallest(10).index]
+    return output_routes
+
 if __name__ == '__main__':
     workplace1 = address('52 Av. de Bordeaux', '42000', 'Mimizan','France')
     workplace2 = address('619 Av. du Maréchal Lyautey','40600','Biscarrosse','France')
@@ -111,4 +120,4 @@ if __name__ == '__main__':
     print('workplace1 : ', get_coordinates(workplace1.address))
     print('workplace2 : ', get_coordinates(workplace2.address))
 
-    logic(workplace1,workplace2)
+    get_all_path_and_times(workplace1,workplace2)

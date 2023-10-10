@@ -26,18 +26,18 @@ For the second process, you can either :
 - Méthode en utilisant l'API routes de google
 - s'inspirer du post medium : https://medium.com/towards-data-science/modern-route-optimization-with-python-fea87d34288b
 
-feature roadmap : 
+## feature roadmap : 
 
-functions : 
-- add a functions that calculate the distance between two points for the distance graph creation
-- graphic functions to help the data analysis use
+1. functions : 
+- add a function that calculate the distance between two points for the distance graph creation
+- graphic functions to help the data analysis use : in progress
 - maybe reorganize the class and organize the repo
-- function to get the top 10 fastest routes
+- function to get the top 10 fastest routes : done
 
-logic : 
-- avoid using every nodes, just select one for some next to each other == it will optimise the road calculation
-- find a way to find the fastest route, but one that is equivalent for both time (50/50)
+2. logic : 
+- avoid using every nodes, just select one for some next to each other == it will optimise the road calculation, select nodes based of a close radius
+- find a way to find the fastest route, but one that is equivalent for both time (50/50) : done
 
-data analysis : 
+3. data analysis : 
 - automate the data analysis in order to know what it is happening in the data (time dependency, histogram, min times, ...)
 - data visualisation with library folium
