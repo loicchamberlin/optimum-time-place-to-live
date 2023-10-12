@@ -31,7 +31,7 @@ For the second process, you can either :
 1. functions : 
     - add a function that calculate the distance between two points for the distance graph creation : done
     - graphic functions to help the data analysis use : in progress
-    - maybe reorganize the class and organize the repo
+    - maybe reorganize the class and organize the repo / create classes for the different kind of elemets
     - function to get the top 10 fastest routes : done
     - data end user visualisation, add some colors to different route (gradient) : in progress
 
