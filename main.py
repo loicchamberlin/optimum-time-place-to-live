@@ -15,6 +15,10 @@ import plotly.express as px  #5.1.0
 import osmnx as ox
 import networkx as nx
 
+# for distance calculation
+import geopy.distance as gd
+import math as m
+
 
 class address:
     def __init__(self, road, postal_code, city, country) -> None:
@@ -36,10 +40,16 @@ def get_coordinates(address) -> (float, float):
     my_json = r.content.decode('utf-8')
     data = json.loads(my_json)
 
-    return round(float(data[0]['lat']),2), round(float(data[0]['lon']),2)
+    return float(data[0]['lat']), float(data[0]['lon'])
 
-def get_roadmap(input_geolocation, network_type='drive', distance=10000):
-    graph = ox.graph_from_point(input_geolocation, dist=distance, simplify=True, network_type=network_type)  #'drive', 'bike', 'walk'
+def get_roadmap(input_geolocation, output_geolocalisation, network_type='drive'):
+    # get informations to create a centered graph
+    distance = get_realdistance(input_geolocation, output_geolocalisation)
+    mid_geolocalisation = get_mid_geolocalisation(input_geolocation, output_geolocalisation)
+
+    print(distance)
+
+    graph = ox.graph_from_point(mid_geolocalisation, dist=distance, simplify=True, network_type=network_type)  #'drive', 'bike', 'walk'
     graph = ox.add_edge_speeds(graph)
     graph = ox.add_edge_travel_times(graph)
     return graph
@@ -65,12 +75,12 @@ def get_path(graph, input_node, input_address, method='travel_time'):
         path_distance = np.nan
     return path, path_distance
 
-def get_all_path_and_times(workplace1, workplace2, distance):
+def get_all_path_and_times(workplace1, workplace2):
     # get the geolocalisation of the two workplace
     geoloc_wpl1, geoloc_wpl2 = get_coordinates(workplace1.address), get_coordinates(workplace2.address)
 
     # create the network graph
-    graph = get_roadmap(geoloc_wpl1, distance=distance)
+    graph = get_roadmap(geoloc_wpl1, geoloc_wpl2)
     # get the closest nodes to the workplaces
     node_wpl1, node_wpl2 = get_close_nodes(graph, geoloc_wpl1, geoloc_wpl2)
     # store the nodes into a DataFrame
@@ -112,6 +122,19 @@ def top_10_fastest_routes(input_routes):
     # Find the index of the row with the lowest sum
     output_routes = input_routes.loc[input_routes['tot_times'].nsmallest(10).index]
     return output_routes
+
+def get_realdistance(geoloc1, geoloc2):
+    return int(gd.geodesic(geoloc1, geoloc2).m)
+
+def get_mid_geolocalisation(geoloc1,geoloc2):
+    
+    Bx = m.cos(geoloc2[1]) * m.cos(geoloc2[0]-geoloc1[0])
+    By = m.cos(geoloc2[1]) * m.sin(geoloc2[0]-geoloc1[0])
+
+    mid_lattitude = m.atan2(m.sin(geoloc1[1]) + m.sin(geoloc2[1]), m.sqrt( (m.cos(geoloc1[1])+Bx)*(m.cos(geoloc1[1])+Bx) + By*By ))
+    mid_longitude = geoloc1[0] + m.atan2(By, m.cos(geoloc1[1]) + Bx)
+
+    return (mid_longitude, mid_lattitude)
 
 if __name__ == '__main__':
     workplace1 = address('52 Av. de Bordeaux', '42000', 'Mimizan','France')
