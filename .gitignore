@@ -4,5 +4,5 @@ cache
 
 # test files to ignore
 découverte.ipynb
-data_analysis_of_main.ipynb
+# data_analysis_of_main.ipynb
 python_smalltest.py
