@@ -121,7 +121,7 @@ def get_path(graph, input_node, input_node_address, method='travel_time') -> (li
     return path, path_distance
 
 
-def get_all_path_and_times(workplace1, workplace2, min_samples=2) -> pd.DataFrame:
+def get_all_path_and_times(workplace1, workplace2, epsilon=0.01, min_samples=2) -> pd.DataFrame:
     """
     This function is the logic to create a DataFrame that contains informations about the routes for one node,
     such as : 
@@ -150,8 +150,9 @@ def get_all_path_and_times(workplace1, workplace2, min_samples=2) -> pd.DataFram
     nodes_dtf = nodes_storage(graph)
 
     # creation of the centroids to combine close areas
-    centroids_dtf = cluster_close_nodes(nodes_dtf, min_samples=min_samples)
-
+    centroids_dtf = cluster_close_nodes(
+        nodes_dtf, epsilon=epsilon, min_samples=min_samples)
+    print('Number of new centroids : ', len(centroids_dtf))
     lst = []
     # logic to calculate the differents path from every nodes to both workplaces
     for row in centroids_dtf.itertuples():
@@ -251,20 +252,24 @@ def get_realdistance(geoloc1, geoloc2) -> int:
 
 def get_mid_geolocalisation(geoloc1, geoloc2) -> (float, float):
     """
-    This function finds the mid geolocalisation between to geolocalisation
+    This function finds the mid geolocalisation between two geolocalisation
 
     :param geoloc1: (float, float).
     :param geoloc2: (float, float).
     :return out_geolocalisation: (float,float).
     """
-    Bx = m.cos(geoloc2[1]) * m.cos(geoloc2[0]-geoloc1[0])
-    By = m.cos(geoloc2[1]) * m.sin(geoloc2[0]-geoloc1[0])
+    phi1 = geoloc1[1] * m.pi/180
+    phi2 = geoloc2[1] * m.pi/180
+    delta_lambda = (geoloc2[0]-geoloc1[0]) * m.pi/180
 
-    mid_lattitude = m.atan2(m.sin(geoloc1[1]) + m.sin(geoloc2[1]), m.sqrt(
-        (m.cos(geoloc1[1])+Bx)*(m.cos(geoloc1[1])+Bx) + By*By))
-    mid_longitude = geoloc1[0] + m.atan2(By, m.cos(geoloc1[1]) + Bx)
+    Bx = m.cos(phi2) * m.cos(delta_lambda)
+    By = m.cos(phi2) * m.sin(delta_lambda)
 
-    return (mid_longitude, mid_lattitude)
+    mid_lattitude = m.atan2(m.sin(phi1) + m.sin(phi2), m.sqrt(
+        (m.cos(phi1)+Bx)*(m.cos(phi1)+Bx) + By*By))
+    mid_longitude = geoloc1[0] * m.pi/180 + m.atan2(By, m.cos(phi1) + Bx)
+
+    return (mid_longitude * 180/m.pi, mid_lattitude * 180/m.pi)
 
 
 if __name__ == '__main__':
