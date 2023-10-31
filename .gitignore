@@ -1,6 +1,7 @@
 __pycache__/
 cache
 .DS_store
+.vscode
 
 # test files to ignore
 découverte.ipynb

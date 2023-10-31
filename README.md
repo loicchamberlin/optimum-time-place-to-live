@@ -36,7 +36,7 @@ For the second process, you can either :
     - data end user visualisation, add some colors to different route (gradient) : in progress
 
 2. logic : 
-    - avoid using every nodes, just select one for some next to each other == it will optimise the road calculation, select nodes based of a close radius
+    - avoid using every nodes, just select one for some next to each other == it will optimise the road calculation, select nodes based of a close radius : done using Kmeans algorithm
     - find a way to find the fastest route, but one that is equivalent for both time (50/50) : done
 
 3. data analysis : 
