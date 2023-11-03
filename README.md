@@ -14,17 +14,12 @@ Output :
     - **Optimum Area** : coordinates (center of the area)
 
 ## Process
-1. Need to convert work place positions into latitude and longitude coordinates
-    - For Later : add a mean to verify if the address used exists
-2. Optimisation problem : need to find the lowest time for both routes 
-    - first based of car routes
+1. Get the workplace addresses into latitude and longitude coordinates
+2. Get the mid geolocalisation in between
+3. Optimisation problem : need to find the lowest time for both routes 
+    - first based of car routes (done)
     - then adding public transport
-
-For the second process, you can either : 
-- Choisir un périmètre fixe, trouver les premiers endroits les plus rapides [**méthode à trouver**] pour aller à l'addresse n, puis vérifier si ces endroits s'intersectent à condition d'être à une certaine distance l'un de l'autre. Si oui, garder la position moyenne entre les deux endroits. Sinon, recommencer en augmentant la périmètre de recherche.
- --> méthode surement inutile sur Paris/IDF car le temps de route en ville peut être raccourcis même en dehors de la même zone
-- Méthode en utilisant l'API routes de google
-- s'inspirer du post medium : https://medium.com/towards-data-science/modern-route-optimization-with-python-fea87d34288b
+4. Results : Roadmap of the different routes
 
 ## feature roadmap : 
 
@@ -33,7 +28,7 @@ For the second process, you can either :
     - graphic functions to help the data analysis use : in progress
     - maybe reorganize the class and organize the repo / create classes for the different kind of elemets
     - function to get the top 10 fastest routes : done
-    - data end user visualisation, add some colors to different route (gradient) : in progress
+    - data end user visualisation, add some colors to different route : in progress
 
 2. logic : 
     - avoid using every nodes, just select one for some next to each other == it will optimise the road calculation, select nodes based of a close radius : done using Kmeans algorithm
