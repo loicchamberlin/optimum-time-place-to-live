@@ -9,9 +9,9 @@ Input :
 
 Output :
 1. in a first place : 
-    - **Optimum Location** : address
+    - **Optimum Locations** : List of geocoordinates in order
 2. then :
-    - **Optimum Area** : coordinates (center of the area)
+    - **Optimum Area** : Map representation of point of interest
 
 ## Process
 1. Get the workplace addresses into latitude and longitude coordinates
