@@ -6,13 +6,6 @@ import numpy as np
 import pandas as pd
 from sklearn.cluster import DBSCAN
 
-# for plotting (add functions to plot)
-import matplotlib.pyplot as plt  # 3.3.2
-import seaborn as sns  # 0.11.1
-import folium  # 0.14.0
-from folium import plugins
-import plotly.express as px  # 5.1.0
-
 # for simple routing
 import osmnx as ox
 import networkx as nx
