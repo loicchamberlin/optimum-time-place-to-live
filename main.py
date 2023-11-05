@@ -26,6 +26,9 @@ class address:
     def display_address(self) -> str:
         print('My address is {}'.format(self.address))
 
+    def get_name(self, var) -> str:
+        return f'{var}'
+
 
 def get_coordinates(address) -> (float, float):
     """
@@ -36,13 +39,16 @@ def get_coordinates(address) -> (float, float):
     :return tuple: (longitude, lattitude).
     """
     # converting the address
-    address = address.replace(' ', '+')
+    address_withplus = address.replace(' ', '+')
+    try:
+        r = requests.get(
+            f'https://geocode.maps.co/search?q={address_withplus}')
+        my_json = r.content.decode('utf-8')
+        data = json.loads(my_json)
 
-    r = requests.get(f'https://geocode.maps.co/search?q={address}')
-    my_json = r.content.decode('utf-8')
-    data = json.loads(my_json)
-
-    return float(data[0]['lat']), float(data[0]['lon'])
+        return float(data[0]['lat']), float(data[0]['lon'])
+    except:
+        return print(f'The address : {address} is invalid.')
 
 
 def get_roadmap(input_geolocation, output_geolocalisation, network_type='drive'):
@@ -114,7 +120,7 @@ def get_path(graph, input_node, input_node_address, method='travel_time') -> (li
     return path, path_distance
 
 
-def get_all_path_and_times(workplace1, workplace2, epsilon=0.01, min_samples=2) -> pd.DataFrame:
+def get_all_path_and_times(workplace1, workplace2, epsilon=0.001, min_samples=2) -> pd.DataFrame:
     """
     This function is the logic to create a DataFrame that contains informations about the routes for one node,
     such as : 
@@ -143,8 +149,15 @@ def get_all_path_and_times(workplace1, workplace2, epsilon=0.01, min_samples=2) 
     nodes_dtf = nodes_storage(graph)
 
     # creation of the centroids to combine close areas
-    centroids_dtf = cluster_close_nodes(
-        nodes_dtf, epsilon=epsilon, min_samples=min_samples)
+    while True:
+        centroids_dtf = cluster_close_nodes(
+            nodes_dtf, epsilon=epsilon, min_samples=min_samples)
+        print(len(centroids_dtf))
+        if len(centroids_dtf) > 100:
+            epsilon += 0.002
+        else:
+            break
+
     print('Number of new centroids : ', len(centroids_dtf))
     lst = []
     # logic to calculate the differents path from every nodes to both workplaces
@@ -196,10 +209,6 @@ def cluster_close_nodes(nodes, epsilon=0.01, min_samples=2):
             cluster_points = coordinates[labels == label]
             cluster_centroid = np.mean(cluster_points, axis=0)
             centroids.append(cluster_centroid)
-
-    '''print("Cluster Centroids:")
-    for idx, centroid in enumerate(centroids):
-        print(f"Cluster {idx + 1}: {centroid}")'''
 
     centroids_dtf = pd.DataFrame(data={'id': [i for i in range(0, len(centroids))],
                                        'node_y': [arr[1] for arr in centroids],
