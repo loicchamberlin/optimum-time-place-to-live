@@ -24,16 +24,21 @@ Output :
 ## feature roadmap : 
 
 1. functions : 
-    - add a function that calculate the distance between two points for the distance graph creation : done
-    - graphic functions to help the data analysis use : in progress
-    - maybe reorganize the class and organize the repo / create classes for the different kind of elemets
-    - function to get the top 10 fastest routes : done
+    - add a function that calculate the distance between two points for the distance graph creation : DONE
+    - graphic functions to help the data analysis use : DONE
+    - function to get the top 10 fastest routes : DONE
     - data end user visualisation, add some colors to different route : in progress
 
 2. logic : 
-    - avoid using every nodes, just select one for some next to each other == it will optimise the road calculation, select nodes based of a close radius : done using Kmeans algorithm
-    - find a way to find the fastest route, but one that is equivalent for both time (50/50) : done
+    - avoid using every nodes, just select one for some next to each other == it will optimise the road calculation, select nodes based of a close radius : DONE using Kmeans algorithm
+    - find a way to find the fastest route, but one that is equivalent for both time (50/50) : DONE
 
 3. data analysis : 
     - automate the data analysis in order to know what it is happening in the data (time dependency, histogram, min times, ...)
-    - data visualisation with library folium
+    - data visualisation with library folium : DONE
+
+4. repository : 
+    - reorganize the class and 
+    - organize the repository
+    - create classes for address, roads
+    - create a main.py meant for the calculation process
